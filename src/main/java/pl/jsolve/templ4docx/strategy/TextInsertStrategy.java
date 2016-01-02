@@ -25,7 +25,18 @@ public class TextInsertStrategy implements InsertStrategy {
             String text = run.getText(0);
             if (StringUtils.contains(text, textInsert.getKey().getKey())) {
                 text = StringUtils.replace(text, textVariable.getKey(), textVariable.getValue());
-                run.setText(text, 0);
+                
+                if (text.contains("\n")) {
+                    final String[] lines = text.split("\n");
+                    run.setText(lines[0], 0); // set first line into XWPFRun
+                    for(int i=1;i<lines.length;i++){
+                        // add break and insert new text
+                        run.addBreak();
+                        run.setText(lines[i]);
+                    }
+                } else {
+                    run.setText(text, 0);
+                }
             }
         }
     }
