@@ -26,7 +26,7 @@ public class ConditionSplitter {
         }
 
         // get variable
-        int spaceAfterVariable = text.indexOf(' ');
+        int spaceAfterVariable = text.indexOf(' '); // TODO cope with no space after variable
         String variable = text.substring(0, spaceAfterVariable);
         text = text.substring(spaceAfterVariable);
         condition.setVariable(variable);

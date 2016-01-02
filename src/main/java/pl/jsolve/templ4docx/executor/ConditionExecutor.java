@@ -108,10 +108,11 @@ public class ConditionExecutor {
                     }
                 }
                 if (paragraphText.contains(CONDITION_SUFFIX)) {
-                    if (deepIndex == 0) {
+                    if (deepIndex == 1) {
                         conditionInsert.setEndIndex(i);
                         conditionInsert.setEndParagraph(paragraph);
                         conditionInsert.setFound(true);
+                        deepIndex = 0;
                     } else {
                         deepIndex--;
                     }
@@ -128,12 +129,8 @@ public class ConditionExecutor {
 
         List<IBodyElement> documentBodyElements = xwpfDocument.getBodyElements();
         List<IBodyElement> listOfBodyElements = Collections.newArrayList();
-        if (startIndex == endIndex) {
-            listOfBodyElements.add(documentBodyElements.get(startIndex));
-        } else {
-            for (int i = startIndex; i < endIndex; i++) {
-                listOfBodyElements.add(documentBodyElements.get(i));
-            }
+        for (int i = startIndex; i <= endIndex; i++) {
+        	listOfBodyElements.add(documentBodyElements.get(i));
         }
         IBodyElement[] bodyElements = listOfBodyElements.toArray(new IBodyElement[0]);
 

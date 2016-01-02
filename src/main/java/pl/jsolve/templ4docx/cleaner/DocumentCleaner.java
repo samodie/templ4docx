@@ -77,7 +77,6 @@ public class DocumentCleaner {
         } else {
             // validate whether xwpfRun contains any variable pattern which are not recognized
             String notRecognizedVariable = "";
-            String notRecognizedPrefix = "";
             int notRecognizedVariableStartIndex = -1;
             for (int i = 0; i < runs.size(); i++) {
                 String text = runs.get(i).getText(0);
@@ -92,10 +91,7 @@ public class DocumentCleaner {
                             boolean executeResult = containsKey(keys, notRecognizedVariable);
                             if (executeResult) {
                                 // Set found variable to start run
-                                String textFromStartRun = startRun.getText(0);
-                                textFromStartRun = StringUtils.replace(textFromStartRun, notRecognizedPrefix,
-                                        notRecognizedVariable);
-                                startRun.setText(textFromStartRun, 0);
+                                startRun.setText(notRecognizedVariable, 0);
 
                                 // clean runs between start and end variable pattern
                                 for (int j = notRecognizedVariableStartIndex + 1; j < i; j++) {
@@ -114,12 +110,11 @@ public class DocumentCleaner {
                         notRecognizedVariable += text;
                     }
 
-                    String prefix = getFirstChar(variablePattern.getPrefix());
+                    String prefix = variablePattern.getPrefix();
                     List<Integer> prefixIndexesOf = Strings.indexesOf(text, prefix);
                     if (!prefixIndexesOf.isEmpty() && Strings.indexesOf(text, variablePattern.getSuffix()).isEmpty()) {
                         notRecognizedVariableStartIndex = i;
                         notRecognizedVariable = text;
-                        notRecognizedPrefix = text.substring(prefixIndexesOf.get(prefixIndexesOf.size() - 1));
                     }
                 }
             }

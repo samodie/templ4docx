@@ -39,7 +39,10 @@ public class ImageInsertStrategy implements InsertStrategy {
 
     private void insertPicture(XWPFRun r, ImageVariable imageVariable) {
         try {
-            r.addPicture(new FileInputStream(imageVariable.getImagePath()),
+            r.addPicture(
+            		imageVariable.getImagePath() != null ?
+            				new FileInputStream(imageVariable.getImagePath()) :
+            				new FileInputStream(imageVariable.getImageFile()),
                     imageVariable.getImageType().getImageType(), imageVariable.getKey(),
                     Units.toEMU(imageVariable.getWidth()), Units.toEMU(imageVariable.getHeight()));
         } catch (InvalidFormatException e) {

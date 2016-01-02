@@ -26,7 +26,7 @@ public class ConditionComparator {
 
         switch (condition.getOperation()) {
         case EQ:
-            return foundCondition.getValue().equals(condition.getValue());
+            return foundCondition.getValue().equals(condition.getValue());  // TODO cope with boolean values
         case NE:
             return !foundCondition.getValue().equals(condition.getValue());
         case NOT_NULL:
